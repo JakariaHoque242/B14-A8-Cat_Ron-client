@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch {
       // Fallback: call express server /jwt
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://b14-a8-cat-ron-server.vercel.app";
         const res2 = await fetch(`${apiUrl}/jwt`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

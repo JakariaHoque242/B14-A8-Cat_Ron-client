@@ -1,6 +1,6 @@
 import { Book, Borrow } from "@/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://b14-a8-cat-ron-server.vercel.app";
 
 const getHeaders = (tokenRequired: boolean = false) => {
   const headers: Record<string, string> = {
