@@ -25,7 +25,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
   const { user } = useAuth();
   const [submitting, setSubmitting] = useState(false);
 
-  // Default return date is 14 days from today
   const defaultDueDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0];
@@ -75,7 +74,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
         transition={{ duration: 0.25 }}
         className="relative w-full max-w-lg bg-white dark:bg-stone-800 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-700 overflow-hidden"
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-stone-100 dark:border-stone-700">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center">
@@ -98,9 +96,7 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
           </button>
         </div>
 
-        {/* Content */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Book Summary Card */}
           <div className="flex items-center space-x-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-900/60 border border-stone-200/60 dark:border-stone-700">
             <div className="relative w-16 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-stone-200">
               <Image
@@ -125,7 +121,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
             </div>
           </div>
 
-          {/* User Info (Read-Only) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1.5">
@@ -151,7 +146,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
             </div>
           </div>
 
-          {/* Return Date Selection */}
           <div>
             <label className="block text-xs font-semibold text-stone-600 dark:text-stone-300 mb-1.5">
               Select Promised Return Date
@@ -172,7 +166,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
             </p>
           </div>
 
-          {/* Loan Policy Note */}
           <div className="flex items-start space-x-2 text-xs text-stone-500 dark:text-stone-400 bg-amber-50/50 dark:bg-amber-950/20 p-3 rounded-xl border border-amber-200/40 dark:border-amber-900/40">
             <AlertCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
             <span>
@@ -180,7 +173,6 @@ export const BorrowModal: React.FC<BorrowModalProps> = ({
             </span>
           </div>
 
-          {/* Actions */}
           <div className="flex items-center justify-end space-x-3 pt-4 border-t border-stone-100 dark:border-stone-700">
             <button
               type="button"

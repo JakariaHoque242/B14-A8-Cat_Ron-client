@@ -65,7 +65,6 @@ export const BannerSlider: React.FC = () => {
           const SlideIcon = slide.icon;
           return (
             <SwiperSlide key={slide.id} className="relative w-full h-full">
-              {/* Background Image */}
               <div className="absolute inset-0 w-full h-full">
                 <Image
                   src={slide.image}
@@ -75,30 +74,24 @@ export const BannerSlider: React.FC = () => {
                   className="object-cover object-center"
                   unoptimized
                 />
-                {/* Gradient Overlay for contrast */}
                 <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-950/80 to-stone-950/40" />
               </div>
 
-              {/* Slide Content */}
               <div className="relative z-10 max-w-7xl mx-auto h-full flex items-center px-6 sm:px-12 lg:px-16">
                 <div className="max-w-2xl space-y-6 text-white">
-                  {/* Badge */}
                   <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold backdrop-blur-md">
                     <SlideIcon className="w-4 h-4 text-amber-400" />
                     <span>{slide.tag}</span>
                   </div>
 
-                  {/* Title */}
                   <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
                     {slide.title}
                   </h1>
 
-                  {/* Subtext */}
                   <p className="text-stone-300 text-base sm:text-lg leading-relaxed max-w-xl">
                     {slide.text}
                   </p>
 
-                  {/* Action Button */}
                   <div className="pt-2">
                     <Link
                       href="/books"

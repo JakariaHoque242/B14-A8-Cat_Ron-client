@@ -17,7 +17,6 @@ const getHeaders = (tokenRequired: boolean = false) => {
   return headers;
 };
 
-// 1. GET /books
 export async function fetchBooks(params?: {
   limit?: number;
   sort?: string;
@@ -38,7 +37,6 @@ export async function fetchBooks(params?: {
   return res.json();
 }
 
-// 2. GET /books/:id
 export async function fetchBookById(id: string): Promise<Book> {
   const res = await fetch(`${API_BASE_URL}/books/${id}`, { cache: "no-store" });
   if (!res.ok) {
@@ -47,7 +45,6 @@ export async function fetchBookById(id: string): Promise<Book> {
   return res.json();
 }
 
-// 3. POST /books
 export async function createBook(bookData: Partial<Book>): Promise<any> {
   const res = await fetch(`${API_BASE_URL}/books`, {
     method: "POST",
@@ -61,7 +58,6 @@ export async function createBook(bookData: Partial<Book>): Promise<any> {
   return data;
 }
 
-// 4. PATCH /books/:id
 export async function updateBook(id: string, bookData: Partial<Book>): Promise<any> {
   const res = await fetch(`${API_BASE_URL}/books/${id}`, {
     method: "PATCH",
@@ -75,7 +71,6 @@ export async function updateBook(id: string, bookData: Partial<Book>): Promise<a
   return data;
 }
 
-// 5. DELETE /books/:id
 export async function deleteBook(id: string): Promise<any> {
   const res = await fetch(`${API_BASE_URL}/books/${id}`, {
     method: "DELETE",
@@ -88,7 +83,6 @@ export async function deleteBook(id: string): Promise<any> {
   return data;
 }
 
-// 6. POST /borrows
 export async function borrowBook(borrowData: {
   bookId: string;
   bookTitle: string;
@@ -109,7 +103,6 @@ export async function borrowBook(borrowData: {
   return data;
 }
 
-// 7. GET /borrows
 export async function fetchUserBorrows(email: string): Promise<Borrow[]> {
   const res = await fetch(`${API_BASE_URL}/borrows?email=${encodeURIComponent(email)}`, {
     headers: getHeaders(true),
@@ -122,7 +115,6 @@ export async function fetchUserBorrows(email: string): Promise<Borrow[]> {
   return data;
 }
 
-// 8. DELETE /borrows/:id
 export async function returnBorrowedBook(id: string): Promise<any> {
   const res = await fetch(`${API_BASE_URL}/borrows/${id}`, {
     method: "DELETE",

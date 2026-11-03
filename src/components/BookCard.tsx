@@ -23,7 +23,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book, index = 0 }) => {
       whileHover={{ y: -6 }}
       className="flex flex-col h-full bg-white dark:bg-stone-800 rounded-2xl overflow-hidden border border-stone-200/80 dark:border-stone-700/80 hover:shadow-2xl dark:hover:shadow-stone-900/60 transition-all duration-300 group"
     >
-      {/* Cover Image Container */}
       <div className="relative w-full h-64 sm:h-72 bg-stone-100 dark:bg-stone-900 overflow-hidden">
         <Image
           src={book.image}
@@ -33,14 +32,12 @@ export const BookCard: React.FC<BookCardProps> = ({ book, index = 0 }) => {
           className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
           unoptimized
         />
-        {/* Category Pill Overlay */}
         <div className="absolute top-3 left-3">
           <span className="px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md bg-stone-900/75 text-amber-300 border border-amber-300/20 shadow-sm">
             {book.category}
           </span>
         </div>
 
-        {/* Available Copies Status Badge */}
         <div className="absolute top-3 right-3">
           <span
             className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md shadow-sm ${
@@ -54,7 +51,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book, index = 0 }) => {
         </div>
       </div>
 
-      {/* Card Body */}
       <div className="flex flex-col flex-1 p-6 justify-between space-y-4">
         <div className="space-y-2">
           <h3 className="font-serif font-bold text-xl text-stone-900 dark:text-stone-100 line-clamp-1 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
@@ -71,7 +67,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book, index = 0 }) => {
           </p>
         </div>
 
-        {/* Action Button */}
         <div className="pt-2 border-t border-stone-100 dark:border-stone-700/60">
           <Link
             href={`/books/${book._id}`}

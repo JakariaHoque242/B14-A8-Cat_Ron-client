@@ -11,7 +11,6 @@ import {
   Menu,
   X,
   LogOut,
-  User as UserIcon,
   PlusCircle,
   Library,
   BookmarkCheck,
@@ -25,7 +24,6 @@ export const Navbar: React.FC = () => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -36,7 +34,6 @@ export const Navbar: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setUserDropdownOpen(false);
@@ -56,7 +53,6 @@ export const Navbar: React.FC = () => {
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-stone-50/90 dark:bg-stone-900/90 border-b border-stone-200 dark:border-stone-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo & Brand Name */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="w-11 h-11 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-200">
               <BookOpen className="w-6 h-6" />
@@ -71,7 +67,6 @@ export const Navbar: React.FC = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {visibleLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -91,7 +86,6 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Area: Theme Toggle & Auth */}
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
 
@@ -111,7 +105,6 @@ export const Navbar: React.FC = () => {
                 </Link>
               </div>
             ) : (
-              /* User Photo Dropdown */
               <div className="relative" ref={dropdownRef}>
                 <button
                   type="button"
@@ -123,7 +116,7 @@ export const Navbar: React.FC = () => {
                     {user.image ? (
                       <Image
                         src={user.image}
-                        alt={user.name || "User Avatar"}
+                        alt={user.name || "User"}
                         width={40}
                         height={40}
                         className="object-cover w-full h-full"
@@ -138,9 +131,8 @@ export const Navbar: React.FC = () => {
                   <ChevronDown className={`w-4 h-4 text-stone-500 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-stone-800 shadow-2xl border border-stone-100 dark:border-stone-700 py-3 px-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-stone-800 shadow-2xl border border-stone-100 dark:border-stone-700 py-3 px-2 z-50">
                     <div className="px-3 py-2 border-b border-stone-100 dark:border-stone-700">
                       <p className="text-sm font-semibold text-stone-900 dark:text-stone-100 truncate">
                         {user.name}
@@ -193,7 +185,6 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
             <ThemeToggle />
             <button
@@ -208,7 +199,6 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-stone-200 dark:border-stone-800 bg-stone-50/95 dark:bg-stone-900/95 px-4 pt-3 pb-6 space-y-3">
           {visibleLinks.map((link) => {

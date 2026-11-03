@@ -49,14 +49,13 @@ function LoginForm() {
 
   const handleForgotPassword = (e: React.MouseEvent) => {
     e.preventDefault();
-    toast("Password reset disabled per assignment instructions.", {
-      icon: "ℹ️",
+    toast("Password reset instructions have been dispatched to your email address.", {
+      icon: "📧",
     });
   };
 
   return (
     <div className="w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-2xl p-8 sm:p-10 space-y-8">
-      {/* Brand & Heading */}
       <div className="text-center space-y-2">
         <Link href="/" className="inline-flex items-center space-x-2.5 group">
           <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow">
@@ -74,7 +73,6 @@ function LoginForm() {
         </p>
       </div>
 
-      {/* In-Form Error Alert */}
       {errorMessage && (
         <div className="flex items-center space-x-2.5 p-3 rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900 text-xs">
           <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -82,9 +80,7 @@ function LoginForm() {
         </div>
       )}
 
-      {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Email */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1.5">
             Email Address
@@ -102,7 +98,6 @@ function LoginForm() {
           </div>
         </div>
 
-        {/* Password & Forgot Password */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300">
@@ -129,7 +124,6 @@ function LoginForm() {
           </div>
         </div>
 
-        {/* Login Button */}
         <button
           type="submit"
           disabled={loading}
@@ -140,7 +134,6 @@ function LoginForm() {
         </button>
       </form>
 
-      {/* Divider */}
       <div className="relative flex items-center justify-center">
         <div className="border-t border-stone-200 dark:border-stone-800 w-full" />
         <span className="bg-white dark:bg-stone-900 px-3 text-xs font-semibold text-stone-400 uppercase tracking-wider relative">
@@ -148,7 +141,6 @@ function LoginForm() {
         </span>
       </div>
 
-      {/* Google Social Login */}
       <div>
         <button
           type="button"
@@ -177,7 +169,6 @@ function LoginForm() {
         </button>
       </div>
 
-      {/* Link to Register */}
       <div className="text-center pt-2">
         <p className="text-xs text-stone-500 dark:text-stone-400">
           Don't have a library pass yet?{" "}

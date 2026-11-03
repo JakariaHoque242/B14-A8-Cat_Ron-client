@@ -43,10 +43,8 @@ export default function HomePage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-20">
-      {/* 1. Hero / Swiper Banner Slider */}
       <BannerSlider />
 
-      {/* 2. New Arrivals (Dynamic Section) */}
       <section className="space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2">
@@ -71,7 +69,6 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* Loading Spinner / Skeletons */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -105,7 +102,6 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* See All Books Button */}
         <div className="text-center pt-4">
           <Link
             href="/books"
@@ -117,7 +113,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Extra Section 1: How Borrowing Works */}
       <section className="bg-gradient-to-br from-amber-50/60 via-stone-50 to-amber-100/30 dark:from-stone-900 dark:via-stone-900/80 dark:to-stone-950 p-8 sm:p-12 lg:p-16 rounded-3xl border border-stone-200/80 dark:border-stone-800 space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
@@ -183,7 +178,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Extra Section 2: Top Curated Categories */}
       <section className="space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
@@ -267,7 +261,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Extra Section 3: Community Reader Reviews */}
       <section className="bg-stone-100 dark:bg-stone-900 p-8 sm:p-12 lg:p-16 rounded-3xl border border-stone-200 dark:border-stone-800 space-y-10">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
@@ -340,7 +333,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Call to Action Newsletter & Library Contribution */}
       <section className="relative overflow-hidden bg-amber-600 text-white rounded-3xl p-8 sm:p-12 lg:p-16 shadow-xl">
         <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
           <h2 className="font-serif font-black text-3xl sm:text-4xl text-white">

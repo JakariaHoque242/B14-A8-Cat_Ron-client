@@ -82,7 +82,6 @@ export const EditBookModal: React.FC<EditBookModalProps> = ({
         transition={{ duration: 0.25 }}
         className="relative w-full max-w-2xl bg-white dark:bg-stone-800 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-700 overflow-hidden max-h-[90vh] flex flex-col"
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-stone-100 dark:border-stone-700">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center">
@@ -105,7 +104,6 @@ export const EditBookModal: React.FC<EditBookModalProps> = ({
           </button>
         </div>
 
-        {/* Scrollable Form Body */}
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -200,7 +198,6 @@ export const EditBookModal: React.FC<EditBookModalProps> = ({
             />
           </div>
 
-          {/* Action buttons */}
           <div className="flex items-center justify-end space-x-3 pt-4 border-t border-stone-100 dark:border-stone-700">
             <button
               type="button"

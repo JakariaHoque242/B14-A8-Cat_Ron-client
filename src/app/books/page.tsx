@@ -15,7 +15,6 @@ export default function AllBooksPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("newest");
 
-  // Dynamic document title
   useEffect(() => {
     document.title = "BookNook | All Books";
   }, []);
@@ -45,7 +44,6 @@ export default function AllBooksPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
-      {/* Header Header */}
       <div className="space-y-4 text-center max-w-3xl mx-auto">
         <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
           <BookOpen className="w-4 h-4" />
@@ -59,10 +57,8 @@ export default function AllBooksPage() {
         </p>
       </div>
 
-      {/* Search & Filter Toolbar */}
       <div className="bg-white dark:bg-stone-900 p-4 sm:p-6 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-sm space-y-4">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          {/* Search Bar */}
           <div className="relative w-full md:max-w-md">
             <Search className="w-4 h-4 text-stone-400 absolute left-4 top-3.5" />
             <input
@@ -74,7 +70,6 @@ export default function AllBooksPage() {
             />
           </div>
 
-          {/* Sort Selector */}
           <div className="flex items-center space-x-3 w-full md:w-auto justify-end">
             <SlidersHorizontal className="w-4 h-4 text-stone-400" />
             <span className="text-xs font-semibold text-stone-600 dark:text-stone-300">Sort:</span>
@@ -89,7 +84,6 @@ export default function AllBooksPage() {
           </div>
         </div>
 
-        {/* Category Pills */}
         <div className="flex items-center space-x-2 overflow-x-auto pb-1 pt-2 scrollbar-none">
           <span className="text-xs font-semibold text-stone-400 flex items-center space-x-1 mr-1">
             <Filter className="w-3.5 h-3.5" />
@@ -115,7 +109,6 @@ export default function AllBooksPage() {
         </div>
       </div>
 
-      {/* Book Grid: 3 cards per row on desktop */}
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3, 4, 5, 6].map((n) => (

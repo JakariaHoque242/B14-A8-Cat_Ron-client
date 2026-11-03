@@ -11,7 +11,6 @@ export default function NotFound() {
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-16">
       <div className="max-w-md w-full text-center space-y-6">
-        {/* Animated Icon Container */}
         <div className="relative mx-auto w-24 h-24 rounded-3xl bg-amber-100 dark:bg-stone-800 text-amber-600 flex items-center justify-center shadow-inner">
           <BookX className="w-12 h-12" />
           <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-amber-600 text-white text-xs font-bold flex items-center justify-center shadow">
@@ -19,7 +18,6 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* Text */}
         <div className="space-y-2">
           <h1 className="font-serif font-black text-3xl sm:text-4xl text-stone-900 dark:text-stone-100">
             Lost Between the Pages
@@ -29,7 +27,6 @@ export default function NotFound() {
           </p>
         </div>
 
-        {/* Action Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <Link
             href="/"

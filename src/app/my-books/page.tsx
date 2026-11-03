@@ -26,7 +26,6 @@ export default function MyBooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Modals state
   const [selectedBookForEdit, setSelectedBookForEdit] = useState<Book | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -42,7 +41,6 @@ export default function MyBooksPage() {
     if (!user?.email) return;
     setLoading(true);
     try {
-      // Fetch all books and filter by author email
       const all = await fetchBooks();
       const myAddedBooks = all.filter(
         (b) => b.userEmail?.toLowerCase() === user.email?.toLowerCase()
@@ -61,7 +59,6 @@ export default function MyBooksPage() {
     }
   }, [user]);
 
-  // Edit book handlers
   const handleEditClick = (book: Book) => {
     setSelectedBookForEdit(book);
     setIsEditModalOpen(true);
@@ -73,7 +70,6 @@ export default function MyBooksPage() {
     );
   };
 
-  // Delete book handlers
   const handleDeleteClick = (book: Book) => {
     setSelectedBookForDelete(book);
     setIsDeleteModalOpen(true);
@@ -97,7 +93,6 @@ export default function MyBooksPage() {
   return (
     <ProtectedRoute>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-        {/* Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
@@ -121,7 +116,6 @@ export default function MyBooksPage() {
           </Link>
         </div>
 
-        {/* Content Table / Cards */}
         {loading ? (
           <div className="space-y-4">
             {[1, 2, 3].map((n) => (
@@ -151,7 +145,6 @@ export default function MyBooksPage() {
                       key={book._id}
                       className="hover:bg-amber-50/40 dark:hover:bg-stone-800/50 transition-colors"
                     >
-                      {/* Cover & Title */}
                       <td className="py-4 px-6">
                         <div className="flex items-center space-x-3">
                           <div className="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-200">
@@ -174,19 +167,16 @@ export default function MyBooksPage() {
                         </div>
                       </td>
 
-                      {/* Author */}
                       <td className="py-4 px-6 font-medium text-stone-700 dark:text-stone-300">
                         {book.author}
                       </td>
 
-                      {/* Category */}
                       <td className="py-4 px-6">
                         <span className="px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-stone-200 dark:border-stone-700">
                           {book.category}
                         </span>
                       </td>
 
-                      {/* Copies */}
                       <td className="py-4 px-6">
                         <div className="flex items-center space-x-1.5 font-bold text-stone-900 dark:text-stone-100">
                           <Layers className="w-3.5 h-3.5 text-amber-600" />
@@ -194,15 +184,12 @@ export default function MyBooksPage() {
                         </div>
                       </td>
 
-                      {/* Added Date */}
                       <td className="py-4 px-6 text-xs text-stone-500">
                         {book.createdAt ? new Date(book.createdAt).toLocaleDateString() : "Active"}
                       </td>
 
-                      {/* Actions */}
                       <td className="py-4 px-6 text-right">
                         <div className="flex items-center justify-end space-x-2">
-                          {/* View details */}
                           <Link
                             href={`/books/${book._id}`}
                             className="p-2 rounded-xl text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
@@ -211,7 +198,6 @@ export default function MyBooksPage() {
                             <Eye className="w-4 h-4" />
                           </Link>
 
-                          {/* Edit button */}
                           <button
                             type="button"
                             onClick={() => handleEditClick(book)}
@@ -221,7 +207,6 @@ export default function MyBooksPage() {
                             <Edit2 className="w-4 h-4" />
                           </button>
 
-                          {/* Delete button */}
                           <button
                             type="button"
                             onClick={() => handleDeleteClick(book)}
@@ -257,7 +242,6 @@ export default function MyBooksPage() {
           </div>
         )}
 
-        {/* Edit Modal */}
         <EditBookModal
           book={selectedBookForEdit}
           isOpen={isEditModalOpen}
@@ -265,7 +249,6 @@ export default function MyBooksPage() {
           onSuccess={handleEditSuccess}
         />
 
-        {/* Delete Confirmation Modal */}
         <DeleteConfirmModal
           isOpen={isDeleteModalOpen}
           title={selectedBookForDelete?.title || "this book"}

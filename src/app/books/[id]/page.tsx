@@ -103,7 +103,6 @@ export default function BookDetailsPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-      {/* Back to Catalog Link */}
       <div>
         <Link
           href="/books"
@@ -114,10 +113,8 @@ export default function BookDetailsPage() {
         </Link>
       </div>
 
-      {/* Main Book Details Card */}
       <div className="bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-xl overflow-hidden p-6 sm:p-10 lg:p-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Cover Image Column (5 Cols) */}
           <div className="lg:col-span-5">
             <div className="relative w-full h-[420px] sm:h-[480px] rounded-2xl overflow-hidden shadow-2xl bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700">
               <Image
@@ -136,7 +133,6 @@ export default function BookDetailsPage() {
             </div>
           </div>
 
-          {/* Book Information Column (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="space-y-2">
               <div className="inline-flex items-center space-x-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
@@ -152,7 +148,6 @@ export default function BookDetailsPage() {
               </p>
             </div>
 
-            {/* Inventory / Copies Availability Banner */}
             <div className="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200/80 dark:border-stone-700">
               <div className="flex items-center space-x-2">
                 <Layers className="w-5 h-5 text-amber-600" />
@@ -174,7 +169,6 @@ export default function BookDetailsPage() {
               )}
             </div>
 
-            {/* Book Description */}
             <div className="space-y-2">
               <h3 className="font-serif font-bold text-base text-stone-900 dark:text-stone-100">
                 Book Synopsis
@@ -184,7 +178,6 @@ export default function BookDetailsPage() {
               </p>
             </div>
 
-            {/* Contributor / Added By Info */}
             <div className="pt-4 border-t border-stone-100 dark:border-stone-800 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-stone-500 dark:text-stone-400">
               <div className="flex items-center space-x-2.5">
                 <User className="w-4 h-4 text-amber-600" />
@@ -206,7 +199,6 @@ export default function BookDetailsPage() {
               </div>
             </div>
 
-            {/* Borrow Action Button */}
             <div className="pt-4">
               <button
                 type="button"
@@ -226,7 +218,6 @@ export default function BookDetailsPage() {
         </div>
       </div>
 
-      {/* Borrow Confirmation Modal */}
       {book && (
         <BorrowModal
           book={book}

@@ -35,7 +35,6 @@ export default function RegisterPage() {
     }
   }, [user, router]);
 
-  // Validation rules
   const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasMinLength = password.length >= 6;
@@ -51,7 +50,6 @@ export default function RegisterPage() {
       return;
     }
 
-    // Password criteria check
     if (!hasUppercase) {
       const err = "Password must contain at least one uppercase letter (A-Z).";
       setErrorMessage(err);
@@ -76,7 +74,6 @@ export default function RegisterPage() {
     setLoading(false);
 
     if (result.success) {
-      // Per instructions: "If the user registers successfully, then navigate them to their Login page."
       toast.success("Registration successful! Please login with your new account.");
       router.push("/login");
     } else {
@@ -87,7 +84,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-2xl p-8 sm:p-10 space-y-8">
-        {/* Brand & Heading */}
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center space-x-2.5 group">
             <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow">
@@ -105,7 +101,6 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* In-Form Error Alert */}
         {errorMessage && (
           <div className="flex items-center space-x-2.5 p-3 rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900 text-xs">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -113,9 +108,7 @@ export default function RegisterPage() {
           </div>
         )}
 
-        {/* Registration Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1.5">
               Full Name *
@@ -133,7 +126,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Email */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1.5">
               Email Address *
@@ -151,7 +143,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Photo URL */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1.5">
               Photo URL (Optional)
@@ -168,7 +159,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1.5">
               Password *
@@ -185,7 +175,6 @@ export default function RegisterPage() {
               <Lock className="w-4 h-4 text-stone-400 absolute left-4 top-3" />
             </div>
 
-            {/* Password Validation Criteria Checklist */}
             <div className="mt-3 p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 space-y-1.5 text-xs">
               <span className="font-semibold text-stone-600 dark:text-stone-300 block text-[11px] uppercase tracking-wider mb-1">
                 Password Requirements:
@@ -226,7 +215,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Register Button */}
           <button
             type="submit"
             disabled={loading}
@@ -237,7 +225,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Divider */}
         <div className="relative flex items-center justify-center">
           <div className="border-t border-stone-200 dark:border-stone-800 w-full" />
           <span className="bg-white dark:bg-stone-900 px-3 text-xs font-semibold text-stone-400 uppercase tracking-wider relative">
@@ -245,7 +232,6 @@ export default function RegisterPage() {
           </span>
         </div>
 
-        {/* Google Social Registration */}
         <div>
           <button
             type="button"
@@ -274,7 +260,6 @@ export default function RegisterPage() {
           </button>
         </div>
 
-        {/* Link to Login */}
         <div className="text-center pt-2">
           <p className="text-xs text-stone-500 dark:text-stone-400">
             Already registered on BookNook?{" "}

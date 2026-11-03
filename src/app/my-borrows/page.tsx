@@ -24,7 +24,6 @@ export default function MyBorrowsPage() {
   const [borrows, setBorrows] = useState<Borrow[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Return modal state
   const [selectedBorrowForReturn, setSelectedBorrowForReturn] = useState<Borrow | null>(null);
   const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
   const [returning, setReturning] = useState(false);
@@ -77,7 +76,6 @@ export default function MyBorrowsPage() {
   return (
     <ProtectedRoute>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
@@ -101,7 +99,6 @@ export default function MyBorrowsPage() {
           </Link>
         </div>
 
-        {/* Borrows Table */}
         {loading ? (
           <div className="space-y-4">
             {[1, 2, 3].map((n) => (
@@ -132,7 +129,6 @@ export default function MyBorrowsPage() {
                         key={borrow._id}
                         className="hover:bg-amber-50/40 dark:hover:bg-stone-800/50 transition-colors"
                       >
-                        {/* Book Info */}
                         <td className="py-4 px-6">
                           <div className="flex items-center space-x-3">
                             <div className="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-stone-200">
@@ -159,7 +155,6 @@ export default function MyBorrowsPage() {
                           </div>
                         </td>
 
-                        {/* Borrow Date */}
                         <td className="py-4 px-6 text-stone-600 dark:text-stone-300">
                           <div className="flex items-center space-x-2 text-xs">
                             <Calendar className="w-4 h-4 text-stone-400" />
@@ -167,7 +162,6 @@ export default function MyBorrowsPage() {
                           </div>
                         </td>
 
-                        {/* Return Due Date */}
                         <td className="py-4 px-6">
                           <div className="flex items-center space-x-2 text-xs font-semibold">
                             <Clock className={`w-4 h-4 ${isOverdue ? 'text-red-500' : 'text-amber-500'}`} />
@@ -182,7 +176,6 @@ export default function MyBorrowsPage() {
                           </div>
                         </td>
 
-                        {/* Status */}
                         <td className="py-4 px-6">
                           <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-400 border border-amber-300/40">
                             <CheckCircle2 className="w-3.5 h-3.5" />
@@ -190,7 +183,6 @@ export default function MyBorrowsPage() {
                           </span>
                         </td>
 
-                        {/* Return Book Button */}
                         <td className="py-4 px-6 text-right">
                           <button
                             type="button"
@@ -227,7 +219,6 @@ export default function MyBorrowsPage() {
           </div>
         )}
 
-        {/* Return Confirmation Modal */}
         <DeleteConfirmModal
           isOpen={isReturnModalOpen}
           title={selectedBorrowForReturn?.bookTitle || "this book"}

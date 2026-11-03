@@ -7,7 +7,6 @@ export const Footer: React.FC = () => {
     <footer className="bg-stone-900 text-stone-300 border-t border-stone-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand Info */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-md">
@@ -20,9 +19,7 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-stone-400 leading-relaxed">
               BookNook is an open community library where readers share, explore, and borrow literature freely. Add a book, borrow a book, return a book.
             </p>
-            {/* Social Links with NEW X Logo */}
             <div className="flex items-center space-x-3 pt-2">
-              {/* New X Logo */}
               <a
                 href="https://x.com"
                 target="_blank"
@@ -64,7 +61,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Navigation */}
           <div className="space-y-4">
             <h3 className="text-white font-serif font-bold text-base tracking-wide">
               Explore Library
@@ -93,7 +89,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Categories */}
           <div className="space-y-4">
             <h3 className="text-white font-serif font-bold text-base tracking-wide">
               Top Categories
@@ -122,7 +117,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-white font-serif font-bold text-base tracking-wide">
               Contact & Help
@@ -146,7 +140,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom copyright bar */}
         <div className="mt-12 pt-8 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 space-y-4 sm:space-y-0">
           <p>© {new Date().getFullYear()} BookNook – Small Online Library. All rights reserved.</p>
           <div className="flex space-x-6">

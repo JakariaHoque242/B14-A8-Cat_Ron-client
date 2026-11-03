@@ -42,12 +42,10 @@ export default function AddBookPage() {
     document.title = "BookNook | Add Book";
   }, []);
 
-  // Handle image upload with ImgBB and seamless FileReader fallback
   const handleImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast.error("Image file must be under 5MB.");
       return;
@@ -56,7 +54,6 @@ export default function AddBookPage() {
     setUploadingImage(true);
     const toastId = toast.loading("Processing book cover image...");
 
-    // Helper: Read file as data URL fallback
     const fallbackToDataURL = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -86,16 +83,14 @@ export default function AddBookPage() {
         const data = await res.json();
         if (data.success && data.data?.url) {
           setImage(data.data.url);
-          toast.success("Image uploaded to ImgBB successfully!", { id: toastId });
+          toast.success("Image uploaded successfully!", { id: toastId });
           setUploadingImage(false);
           return;
         }
       }
     } catch {
-      // Continue to local reader
     }
 
-    // Direct seamless reader (guarantees 100% success without needing third-party API key)
     fallbackToDataURL();
   };
 
@@ -137,7 +132,6 @@ export default function AddBookPage() {
   return (
     <ProtectedRoute>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-        {/* Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-xs font-semibold">
             <BookPlus className="w-4 h-4" />
@@ -151,10 +145,8 @@ export default function AddBookPage() {
           </p>
         </div>
 
-        {/* Add Book Form Card */}
         <div className="bg-white dark:bg-stone-900 p-6 sm:p-10 rounded-3xl border border-stone-200 dark:border-stone-800 shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title & Author */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
@@ -185,7 +177,6 @@ export default function AddBookPage() {
               </div>
             </div>
 
-            {/* Category & Total Copies */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
@@ -222,14 +213,12 @@ export default function AddBookPage() {
               </div>
             </div>
 
-            {/* Book Image Upload or URL */}
             <div className="space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider">
                   Book Cover Image * (Upload file or paste URL)
                 </label>
 
-                {/* Quick Presets */}
                 <div className="flex items-center space-x-1.5 text-xs">
                   <span className="text-stone-400 text-[11px]">Or pick sample:</span>
                   {CURATED_COVERS.map((preset) => (
@@ -246,7 +235,6 @@ export default function AddBookPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* File Upload to ImgBB with local reader fallback */}
                 <label className="flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-stone-300 dark:border-stone-700 hover:border-amber-500 bg-stone-50 dark:bg-stone-800/40 cursor-pointer transition-colors text-center group">
                   <UploadCloud className="w-8 h-8 text-stone-400 group-hover:text-amber-600 transition-colors mb-2" />
                   <span className="text-xs font-semibold text-stone-700 dark:text-stone-300">
@@ -264,7 +252,6 @@ export default function AddBookPage() {
                   />
                 </label>
 
-                {/* Direct URL input with preview */}
                 <div className="flex flex-col justify-between space-y-2">
                   <div className="relative">
                     <input
@@ -299,7 +286,6 @@ export default function AddBookPage() {
               </div>
             </div>
 
-            {/* Description */}
             <div>
               <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider mb-2">
                 Short Description *
@@ -314,7 +300,6 @@ export default function AddBookPage() {
               />
             </div>
 
-            {/* Read-Only Contributor Info */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
               <div>
                 <label className="block text-[11px] font-bold uppercase text-stone-400 mb-1">
@@ -340,7 +325,6 @@ export default function AddBookPage() {
               </div>
             </div>
 
-            {/* Submit Button */}
             <div className="pt-2">
               <button
                 type="submit"
