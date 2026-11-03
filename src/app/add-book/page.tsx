@@ -18,6 +18,13 @@ import {
 
 const CATEGORIES = ["Fiction", "Science", "History", "Kids", "Others"];
 
+const CURATED_COVERS = [
+  { name: "Fiction", url: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800" },
+  { name: "Science", url: "https://images.unsplash.com/photo-1532012164546-f432f2e37b7b?auto=format&fit=crop&q=80&w=800" },
+  { name: "History", url: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800" },
+  { name: "Kids", url: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=800" },
+];
+
 export default function AddBookPage() {
   const { user } = useAuth();
   const router = useRouter();
@@ -35,7 +42,7 @@ export default function AddBookPage() {
     document.title = "BookNook | Add Book";
   }, []);
 
-  // Handle image upload to ImgBB
+  // Handle image upload with ImgBB and seamless FileReader fallback
   const handleImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -47,34 +54,49 @@ export default function AddBookPage() {
     }
 
     setUploadingImage(true);
-    const toastId = toast.loading("Uploading image to ImgBB...");
+    const toastId = toast.loading("Processing book cover image...");
+
+    // Helper: Read file as data URL fallback
+    const fallbackToDataURL = () => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Url = event.target?.result as string;
+        setImage(base64Url);
+        toast.success("Image file loaded successfully!", { id: toastId });
+        setUploadingImage(false);
+      };
+      reader.onerror = () => {
+        toast.error("Failed to read image file.", { id: toastId });
+        setUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    };
 
     try {
-      const formData = new FormData();
-      formData.append("image", file);
+      const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+      if (apiKey) {
+        const formData = new FormData();
+        formData.append("image", file);
 
-      // Use environment key or default imgbb client key
-      const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY || "1e2b6eaebdb956f10ad9b1fdb57d76a7";
-      const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-        method: "POST",
-        body: formData,
-      });
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+          method: "POST",
+          body: formData,
+        });
 
-      const data = await res.json();
-      if (data.success && data.data?.url) {
-        setImage(data.data.url);
-        toast.success("Image uploaded successfully!", { id: toastId });
-      } else {
-        throw new Error(data.error?.message || "ImgBB upload failed");
+        const data = await res.json();
+        if (data.success && data.data?.url) {
+          setImage(data.data.url);
+          toast.success("Image uploaded to ImgBB successfully!", { id: toastId });
+          setUploadingImage(false);
+          return;
+        }
       }
-    } catch (err: any) {
-      toast.error(
-        "Could not upload to ImgBB directly. You can also paste any public image URL below.",
-        { id: toastId }
-      );
-    } finally {
-      setUploadingImage(false);
+    } catch {
+      // Continue to local reader
     }
+
+    // Direct seamless reader (guarantees 100% success without needing third-party API key)
+    fallbackToDataURL();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -202,19 +224,36 @@ export default function AddBookPage() {
 
             {/* Book Image Upload or URL */}
             <div className="space-y-3">
-              <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider">
-                Book Cover Image * (Upload or URL)
-              </label>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <label className="block text-xs font-bold text-stone-700 dark:text-stone-300 uppercase tracking-wider">
+                  Book Cover Image * (Upload file or paste URL)
+                </label>
+
+                {/* Quick Presets */}
+                <div className="flex items-center space-x-1.5 text-xs">
+                  <span className="text-stone-400 text-[11px]">Or pick sample:</span>
+                  {CURATED_COVERS.map((preset) => (
+                    <button
+                      key={preset.name}
+                      type="button"
+                      onClick={() => setImage(preset.url)}
+                      className="px-2 py-0.5 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-amber-100 dark:hover:bg-amber-950/50 text-[10px] font-semibold text-stone-700 dark:text-stone-300 hover:text-amber-700 dark:hover:text-amber-400 transition"
+                    >
+                      {preset.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* File Upload to ImgBB */}
+                {/* File Upload to ImgBB with local reader fallback */}
                 <label className="flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-stone-300 dark:border-stone-700 hover:border-amber-500 bg-stone-50 dark:bg-stone-800/40 cursor-pointer transition-colors text-center group">
                   <UploadCloud className="w-8 h-8 text-stone-400 group-hover:text-amber-600 transition-colors mb-2" />
                   <span className="text-xs font-semibold text-stone-700 dark:text-stone-300">
-                    {uploadingImage ? "Uploading to ImgBB..." : "Click to Upload Image File"}
+                    {uploadingImage ? "Processing Image..." : "Click to Upload Image File"}
                   </span>
                   <span className="text-[10px] text-stone-400 mt-0.5">
-                    PNG, JPG, WEBP up to 5MB
+                    Select any PNG, JPG, or WEBP from your device
                   </span>
                   <input
                     type="file"
@@ -246,14 +285,14 @@ export default function AddBookPage() {
                       <div className="truncate text-xs">
                         <span className="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center space-x-1">
                           <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Image URL Loaded</span>
+                          <span>Image Loaded Successfully</span>
                         </span>
-                        <p className="text-[10px] text-stone-400 truncate max-w-xs">{image}</p>
+                        <p className="text-[10px] text-stone-400 truncate max-w-xs">{image.slice(0, 45)}...</p>
                       </div>
                     </div>
                   ) : (
                     <p className="text-[11px] text-stone-400">
-                      Tip: You can use any high-resolution book cover from Unsplash or upload directly via the upload box.
+                      Tip: You can upload any file from your computer, click one of the sample buttons above, or paste an image link.
                     </p>
                   )}
                 </div>
