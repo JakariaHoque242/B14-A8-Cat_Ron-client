@@ -32,12 +32,17 @@ export interface User {
   image?: string;
 }
 
+export interface AuthResponse {
+  success: boolean;
+  error?: string;
+}
+
 export interface AuthContextType {
   user: User | null;
   token: string | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (name: string, email: string, password: string, image?: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<AuthResponse>;
+  register: (name: string, email: string, password: string, image?: string) => Promise<AuthResponse>;
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   getToken: () => string | null;

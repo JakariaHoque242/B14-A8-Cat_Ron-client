@@ -14,12 +14,27 @@ const client = new MongoClient(uri, {
 
 const db = client.db("booknookDB");
 
+const getBaseURL = () => {
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+};
+
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
   }),
   secret: process.env.BETTER_AUTH_SECRET || "booknook_auth_super_secret_session_key_2026",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: getBaseURL(),
+  trustedOrigins: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://*.vercel.app",
+    ...(process.env.BETTER_AUTH_URL ? [process.env.BETTER_AUTH_URL] : []),
+    ...(process.env.NEXT_PUBLIC_APP_URL ? [process.env.NEXT_PUBLIC_APP_URL] : []),
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : [])
+  ],
   emailAndPassword: {
     enabled: true,
   },

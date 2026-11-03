@@ -72,15 +72,15 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
-    const success = await register(name, email, password, photoURL);
+    const result = await register(name, email, password, photoURL);
     setLoading(false);
 
-    if (success) {
+    if (result.success) {
       // Per instructions: "If the user registers successfully, then navigate them to their Login page."
       toast.success("Registration successful! Please login with your new account.");
       router.push("/login");
     } else {
-      setErrorMessage("Registration could not be completed. The email may already be in use.");
+      setErrorMessage(result.error || "Registration could not be completed. Please check your details and try again.");
     }
   };
 

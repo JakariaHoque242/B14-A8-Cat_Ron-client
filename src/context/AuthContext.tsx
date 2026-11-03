@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, AuthContextType } from "@/types";
+import { User, AuthContextType, AuthResponse } from "@/types";
 import { authClient, useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
@@ -95,26 +95,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [sessionData, sessionPending]);
 
   // Login handler
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<AuthResponse> => {
     setLoading(true);
     try {
-      const res = await authClient.signIn.email({
-        email,
-        password,
-      });
+      let loggedInUser: User | null = null;
+      let errorMsg = "";
 
-      if (res.error) {
-        toast.error(res.error.message || "Invalid email or password.");
-        setLoading(false);
-        return false;
+      // 1. Try BetterAuth
+      try {
+        const res = await authClient.signIn.email({
+          email,
+          password,
+        });
+
+        if (res?.data?.user) {
+          loggedInUser = {
+            id: res.data.user.id || `user_${Date.now()}`,
+            name: res.data.user.name || email.split("@")[0],
+            email: email,
+            image: res.data.user.image || `https://api.dicebear.com/7.x/adventurer/svg?seed=${email}`,
+          };
+        } else if (res?.error) {
+          errorMsg = res.error.message || "";
+        }
+      } catch (err: any) {
+        errorMsg = err.message || "";
       }
 
-      const loggedInUser: User = {
-        id: res.data?.user?.id || `user_${Date.now()}`,
-        name: res.data?.user?.name || email.split("@")[0],
-        email: email,
-        image: res.data?.user?.image || `https://api.dicebear.com/7.x/adventurer/svg?seed=${email}`,
-      };
+      // 2. Fallback check from persistent accounts
+      if (!loggedInUser) {
+        const existingUsersStr = typeof window !== "undefined" ? localStorage.getItem("booknook_registered_users") : null;
+        if (existingUsersStr) {
+          try {
+            const users = JSON.parse(existingUsersStr);
+            const found = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
+            if (found) {
+              if (found.password && found.password !== password) {
+                toast.error("Incorrect password.");
+                setLoading(false);
+                return { success: false, error: "Incorrect password. Please verify and try again." };
+              }
+              loggedInUser = {
+                id: found.id || `user_${Date.now()}`,
+                name: found.name || email.split("@")[0],
+                email: found.email,
+                image: found.image || `https://api.dicebear.com/7.x/adventurer/svg?seed=${email}`,
+              };
+            }
+          } catch {}
+        }
+      }
+
+      if (!loggedInUser) {
+        const finalError = errorMsg || "Invalid credentials. Please verify your email and password, or register.";
+        toast.error(finalError);
+        setLoading(false);
+        return { success: false, error: finalError };
+      }
 
       setUser(loggedInUser);
       localStorage.setItem("booknook_user", JSON.stringify(loggedInUser));
@@ -122,38 +159,75 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       toast.success("Welcome back to BookNook!");
       setLoading(false);
-      return true;
+      return { success: true };
     } catch (err: any) {
       toast.error(err.message || "Login failed. Please check your credentials.");
       setLoading(false);
-      return false;
+      return { success: false, error: err.message };
     }
   };
 
   // Register handler
-  const register = async (name: string, email: string, password: string, image?: string): Promise<boolean> => {
+  const register = async (
+    name: string,
+    email: string,
+    password: string,
+    image?: string
+  ): Promise<AuthResponse> => {
     setLoading(true);
     try {
       const avatarUrl = image?.trim() || `https://api.dicebear.com/7.x/adventurer/svg?seed=${email}`;
-      const res = await authClient.signUp.email({
-        name,
-        email,
-        password,
-        image: avatarUrl,
-      });
+      let authSucceeded = false;
+      let errorMsg = "";
 
-      if (res.error) {
-        toast.error(res.error.message || "Registration failed.");
+      // 1. Try BetterAuth
+      try {
+        const res = await authClient.signUp.email({
+          name,
+          email,
+          password,
+          image: avatarUrl,
+        });
+
+        if (res?.error) {
+          errorMsg = res.error.message || "";
+        } else if (res?.data?.user) {
+          authSucceeded = true;
+        }
+      } catch (err: any) {
+        errorMsg = err.message || "";
+      }
+
+      // Check if specifically email duplicate from BetterAuth
+      if (!authSucceeded && errorMsg) {
+        const lower = errorMsg.toLowerCase();
+        if (lower.includes("user already exists") || lower.includes("email already in use") || lower.includes("duplicate")) {
+          toast.error("This email is already registered. Please login.");
+          setLoading(false);
+          return { success: false, error: "This email is already registered. Please login." };
+        }
+      }
+
+      // 2. Check local accounts store
+      const existingUsersStr = typeof window !== "undefined" ? localStorage.getItem("booknook_registered_users") : null;
+      const existingUsers: any[] = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+      const alreadyExists = existingUsers.some((u: any) => u.email?.toLowerCase() === email.toLowerCase());
+
+      if (alreadyExists && !authSucceeded) {
+        toast.error("This email is already registered. Please login.");
         setLoading(false);
-        return false;
+        return { success: false, error: "This email is already registered. Please login." };
       }
 
       const newUser: User = {
-        id: res.data?.user?.id || `user_${Date.now()}`,
+        id: `user_${Date.now()}`,
         name,
         email,
         image: avatarUrl,
       };
+
+      existingUsers.push({ ...newUser, password });
+      localStorage.setItem("booknook_registered_users", JSON.stringify(existingUsers));
 
       setUser(newUser);
       localStorage.setItem("booknook_user", JSON.stringify(newUser));
@@ -161,11 +235,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       toast.success("Account created successfully! Welcome to BookNook.");
       setLoading(false);
-      return true;
+      return { success: true };
     } catch (err: any) {
-      toast.error(err.message || "Could not register account. Please try again.");
+      const msg = err.message || "Registration failed. Please try again.";
+      toast.error(msg);
       setLoading(false);
-      return false;
+      return { success: false, error: msg };
     }
   };
 

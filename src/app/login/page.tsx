@@ -37,13 +37,13 @@ function LoginForm() {
     }
 
     setLoading(true);
-    const success = await login(email, password);
+    const result = await login(email, password);
     setLoading(false);
 
-    if (success) {
+    if (result.success) {
       router.push(from);
     } else {
-      setErrorMessage("Invalid credentials. Please verify your email and password.");
+      setErrorMessage(result.error || "Invalid credentials. Please verify your email and password.");
     }
   };
 
