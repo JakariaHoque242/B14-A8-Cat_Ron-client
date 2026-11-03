@@ -1,8 +1,8 @@
 # 📖 BookNook – A Small Online Library
 
-**Live Application URL**: [https://booknook-library.vercel.app](https://booknook-library.vercel.app) *(Replace with your deployed production URL)*  
-**Client Repository**: [GitHub - BookNook Client](https://github.com/your-username/booknook-client)  
-**Server Repository**: [GitHub - BookNook Server](https://github.com/your-username/booknook-server)  
+**Live Application URL**: [https://b14-a8-cat-ron.vercel.app](https://b14-a8-cat-ron.vercel.app) *(or your deployed live site)*  
+**Client Repository**: [https://github.com/JakariaHoque242/B14-A8-Cat_Ron-client](https://github.com/JakariaHoque242/B14-A8-Cat_Ron-client)  
+**Server Repository**: [https://github.com/JakariaHoque242/B14-A8-Cat_Ron-server](https://github.com/JakariaHoque242/B14-A8-Cat_Ron-server)  
 
 BookNook is an online library application engineered with Next.js (App Router), TypeScript, Tailwind CSS, and BetterAuth with MongoDB. It offers an intuitive, accessible experience inspired by modern library catalogs and editorial design: **Add a book, borrow a book, return a book.**
 
