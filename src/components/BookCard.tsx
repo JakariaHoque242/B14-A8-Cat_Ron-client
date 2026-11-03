@@ -4,17 +4,25 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Book } from "@/types";
-import { ArrowRight, BookMarked, User } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface BookCardProps {
   book: Book;
+  index?: number;
 }
 
-export const BookCard: React.FC<BookCardProps> = ({ book }) => {
+export const BookCard: React.FC<BookCardProps> = ({ book, index = 0 }) => {
   const isAvailable = (book.copies ?? 0) > 0;
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-stone-800 rounded-2xl overflow-hidden border border-stone-200/80 dark:border-stone-700/80 hover:shadow-xl dark:hover:shadow-stone-900/50 hover:-translate-y-1 transition-all duration-300 group">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: Math.min(index * 0.08, 0.4) }}
+      whileHover={{ y: -6 }}
+      className="flex flex-col h-full bg-white dark:bg-stone-800 rounded-2xl overflow-hidden border border-stone-200/80 dark:border-stone-700/80 hover:shadow-2xl dark:hover:shadow-stone-900/60 transition-all duration-300 group"
+    >
       {/* Cover Image Container */}
       <div className="relative w-full h-64 sm:h-72 bg-stone-100 dark:bg-stone-900 overflow-hidden">
         <Image
@@ -74,6 +82,6 @@ export const BookCard: React.FC<BookCardProps> = ({ book }) => {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

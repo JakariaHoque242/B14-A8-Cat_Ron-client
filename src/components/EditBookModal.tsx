@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Book } from "@/types";
 import { updateBook } from "@/lib/api";
 import toast from "react-hot-toast";
-import { X, Edit3, Image as ImageIcon, Sparkles } from "lucide-react";
+import { X, Edit3 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface EditBookModalProps {
   book: Book | null;
@@ -73,8 +74,14 @@ export const EditBookModal: React.FC<EditBookModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white dark:bg-stone-800 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-700 overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 15 }}
+        transition={{ duration: 0.25 }}
+        className="relative w-full max-w-2xl bg-white dark:bg-stone-800 rounded-3xl shadow-2xl border border-stone-200 dark:border-stone-700 overflow-hidden max-h-[90vh] flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-stone-100 dark:border-stone-700">
           <div className="flex items-center space-x-3">
@@ -212,7 +219,7 @@ export const EditBookModal: React.FC<EditBookModalProps> = ({
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };
